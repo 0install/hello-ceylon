@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface" xmlns:compile="http://zero-install.sourceforge.net/2006/namespaces/0compile">
+  <name>hello-ceylon</name>
+  <summary>minimal template package for Ceylon programs</summary>
+  <description>
+    This Ceylon program outputs the message "Hello World". You can create new releases of it
+    using 0release, compile it with 0compile, etc. It gets the Ceylon compiler and runtime though 0install.
+  </description>
+
+  <homepage>http://0install.net/templates.html</homepage>
+
+  <feed-for interface='http://0install.net/tests/hello-ceylon.xml'/>
+
+  <implementation arch="*-src" id="." version="0.1-pre" compile:min-version='0.24'>
+    <command name='compile' shell-command='$SRCDIR/src/build.sh'>
+      <requires interface='http://repo.roscidus.com/ceylon/compiler'>
+	<executable-in-var name='CEYLONC'/>
+      </requires>
+
+      <compile:implementation arch='*-*'>
+	<environment name='CLASSPATH' insert='helloworld.car'/>
+	<command name='run'>
+	  <runner interface="http://repo.roscidus.com/ceylon/runtime"/>
+	  <arg>helloworld</arg>
+	</command>
+      </compile:implementation>
+
+    </command>
+  </implementation>
+</interface>
