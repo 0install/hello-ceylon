@@ -13,10 +13,6 @@
 
   <implementation arch="*-src" id="." version="0.1-pre" compile:min-version='0.24'>
     <command name='compile' shell-command='$SRCDIR/src/build.sh'>
-      <requires interface='http://repo.roscidus.com/ceylon/compiler'>
-	<executable-in-var name='CEYLONC'/>
-      </requires>
-
       <compile:implementation arch='*-*'>
 	<environment name='CLASSPATH' insert='helloworld.car'/>
 	<command name='run'>
@@ -26,5 +22,25 @@
       </compile:implementation>
 
     </command>
+
+    <!-- Nice way, but requires 0install >= 1.4 -->
+    <requires interface='http://repo.roscidus.com/ceylon/compiler'>
+      <executable-in-var name='CEYLONC'/>
+    </requires>
+
+    <!-- Works with older versions (e.g. 1.0) -->
+    <environment insert="compiler.jar" name="JAVA_CP"/>
+    <requires interface="http://repo.roscidus.com/ceylon/spec">
+      <environment insert="com.redhat.ceylon.typechecker.jar" name="JAVA_CP"/>
+    </requires>
+    <environment insert="antlrworks.jar" name="JAVA_CP"/>
+    <requires interface="http://repo.roscidus.com/ceylon/runtime">
+      <environment insert="ceylon.language.car" name="COMPILE_CP"/>
+    </requires>
+    <environment name='CEYLON_HOME' insert='.' mode='replace'/>
+    <requires interface="http://repo.roscidus.com/java/openjdk-6-jre">
+      <environment name='JRE_BIN' insert='bin/'/>
+    </requires>
+
   </implementation>
 </interface>
